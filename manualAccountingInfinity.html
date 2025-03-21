@@ -1,0 +1,88 @@
+<template>
+<lightning-card  title="ACGP Invoice Accounting">
+    <div if:true={isLoading} style="height: 200px; position:relative">
+    <lightning-spinner variant="base" size="medium"></lightning-spinner>
+  </div>
+    <div if:true={error} class="slds-text-color_destructive slds-align_absolute-center" style="height:5rem">
+        <b>{submitError}</b>
+    </div>
+    <!--<div class="slds-p-around_small">-->
+        <template if:true= {firstcmp}> 
+
+        <lightning-layout>
+
+            <lightning-layout-item padding="around-small">
+                <lightning-combobox name="level"
+                label="Year"
+                value={yearvalue}
+                placeholder="-Select-"
+                options={yearss}
+                onchange={handleyear}>
+                </lightning-combobox> 
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small">
+                <lightning-combobox name="level"
+                label="Month"
+                value={monthvalue}
+                placeholder="-Select-"
+                options={months}
+                onchange={handlemonth}>
+                </lightning-combobox>                
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small">
+
+                <lightning-combobox name="level"
+                label="Sales Area "
+                value={areavalue}
+                placeholder="-Select-"
+                options={transformedData}
+                onchange={handleSalesAreaChange}>
+               </lightning-combobox>
+           </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small">
+                <lightning-input type="text" label="Invoice Number" placeholder="Invoice Number..."   value={searchKeyword} onchange={handlesearchinput}></lightning-input>
+            </lightning-layout-item>
+          
+            <lightning-layout-item padding="around-small" class="slds-m-top_large">
+                <lightning-button variant="brand"  label="Search" title="Search" onclick={handleClick} ></lightning-button>
+            </lightning-layout-item> 
+            
+        </lightning-layout>
+
+
+    <!--</div>-->
+</template>
+<template if:true= {secondcmp}>
+
+    <lightning-datatable
+    key-field="id"
+    data={datatabledata}
+    columns={columns}
+    onsave ={handledatatable}
+    onrowselection={getSelectedName}
+    oncellchange={cellchangehandler}
+    suppress-bottom-bar	= "true">
+    </lightning-datatable>
+
+    
+
+
+</template>
+
+
+<template if:true= {thirdcmp}>
+  <lightning-datatable
+        key-field="Id"
+        data={opportunityDataTable}
+        columns={oppscolumns}
+        onsave={updateSelectedRecords}
+        onrowselection={getSelectedopportunity}>      
+</lightning-datatable>
+
+
+</template>
+</lightning-card>
+</template>
